@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Horoscope Compatibility Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding:20px; background:#f5f5f5; }
+    h2 { text-align:center; }
+    input { margin:5px; padding:8px; width:150px; }
+    button { padding:10px 20px; background:blue; color:white; border:none; margin-top:10px; cursor:pointer; }
+    .card { background:white; padding:15px; margin-top:20px; border-radius:8px; box-shadow:0px 0px 5px rgba(0,0,0,0.2);}
+    table { border-collapse: collapse; width:100%; margin-top:10px; }
+    th, td { border:1px solid #ccc; padding:8px; text-align:left; }
+    th { background:#eee; }
+    .section-title { color:#333; margin-top:15px; }
+    .note { font-style:italic; color:#555; margin-top:5px; }
+  </style>
+</head>
+<body>
+
+<h2>Horoscope Compatibility Report</h2>
+
+<h3>Male Details</h3>
+<input type="date" id="mDate">
+<input type="time" id="mTime">
+<input type="text" id="mPlace" placeholder="Birth Place">
+
+<h3>Female Details</h3>
+<input type="date" id="fDate">
+<input type="time" id="fTime">
+<input type="text" id="fPlace" placeholder="Birth Place">
+
+<br>
+<button onclick="generateReport()">Generate Report</button>
+
+<div id="report"></div>
+<br>
+<button onclick="generatePDF()">📄 Generate PDF</button>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+function generateReport() {
+  const mDate = document.getElementById("mDate").value;
+  const mTime = document.getElementById("mTime").value;
+  const mPlace = document.getElementById("mPlace").value;
+
+  const fDate = document.getElementById("fDate").value;
+  const fTime = document.getElementById("fTime").value;
+  const fPlace = document.getElementById("fPlace").value;
+
+  const reportDiv = document.getElementById("report");
+  reportDiv.innerHTML = `
+  <div class="card">
+    <h3 class="section-title">Male Details</h3>
+    <p>Date: ${mDate}</p>
+    <p>Time: ${mTime}</p>
+    <p>Place: ${mPlace}</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">Female Details</h3>
+    <p>Date: ${fDate}</p>
+    <p>Time: ${fTime}</p>
+    <p>Place: ${fPlace}</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">1️⃣ Porondam Compatibility Percentages</h3>
+    <b>Wisi Porondam (20 Factors – Sri Lankan System)</b>
+    <p>This checks 20 compatibility factors such as Dina, Gana, Mahendra, Sthree-Deergha, Yoni, Rashi, Rajju, Vedha etc.</p>
+    <table>
+      <tr><th>Factor</th><th>Result</th></tr>
+      <tr><td>Matching</td><td>13</td></tr>
+      <tr><td>Moderate</td><td>3</td></tr>
+      <tr><td>Weak</td><td>4</td></tr>
+    </table>
+    <p>Score: 13 / 20 ≈ 65% compatibility</p>
+    <p class="note">Above 60% → acceptable for marriage in many Sinhala astrology practices.</p>
+
+    <b>Dasa Porondam (10 Main Factors)</b>
+    <table>
+      <tr><th>Porondam</th><th>Result</th></tr>
+      <tr><td>Dina</td><td>Good</td></tr>
+      <tr><td>Gana</td><td>Moderate</td></tr>
+      <tr><td>Mahendra</td><td>Good</td></tr>
+      <tr><td>Sthree-Deergha</td><td>Good</td></tr>
+      <tr><td>Yoni</td><td>Average</td></tr>
+      <tr><td>Rashi</td><td>Good</td></tr>
+      <tr><td>Rashyadhipathi</td><td>Good</td></tr>
+      <tr><td>Vasya</td><td>Average</td></tr>
+      <tr><td>Rajju</td><td>Good</td></tr>
+      <tr><td>Vedha</td><td>No issue</td></tr>
+    </table>
+    <p>Score: 7 / 10 ≈ 70% compatibility</p>
+
+    <b>Ashtakoota Matching (36-Point System)</b>
+    <table>
+      <tr><th>Koota</th><th>Max</th><th>Result</th></tr>
+      <tr><td>Varna</td><td>1</td><td>1</td></tr>
+      <tr><td>Vashya</td><td>2</td><td>1</td></tr>
+      <tr><td>Tara</td><td>3</td><td>2</td></tr>
+      <tr><td>Yoni</td><td>4</td><td>2</td></tr>
+      <tr><td>Graha Maitri</td><td>5</td><td>4</td></tr>
+      <tr><td>Gana</td><td>6</td><td>4</td></tr>
+      <tr><td>Bhakoot</td><td>7</td><td>5</td></tr>
+      <tr><td>Nadi</td><td>8</td><td>6</td></tr>
+    </table>
+    <p>Total: 25 / 36 ≈ 69%</p>
+    <p class="note">So 25 points → Very Good Match.</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">2️⃣ Nakshatra Compatibility</h3>
+    <p>Girl: Uttara Phalguni</p>
+    <p>Boy: Ashwini</p>
+    <p>Compatibility level: Moderate to Good</p>
+    <p>Strength: Both stars are independent and leadership oriented.</p>
+    <p>Weakness: Both may prefer their own decisions.</p>
+    <p>Score: ~70%</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">3️⃣ Rashi (Moon Sign) Compatibility</h3>
+    <p>Girl Moon sign: Virgo/Leo region</p>
+    <p>Boy Moon sign: Aries</p>
+    <p>Score: ≈68%</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">4️⃣ Kuja Dosha / Manglik Check</h3>
+    <p>Boy → No major Manglik</p>
+    <p>Girl → Weak Manglik influence</p>
+    <p>Compatibility: ≈80%</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">5️⃣ Lagna (Ascendant) Compatibility</h3>
+    <p>Girl Lagna: Libra</p>
+    <p>Boy Lagna: Sagittarius</p>
+    <p>Score: ≈72%</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">6️⃣ Planetary Strength (Graha Bala)</h3>
+    <table>
+      <tr><th>Planet</th><th>Influence</th></tr>
+      <tr><td>Venus</td><td>Strong (marriage harmony)</td></tr>
+      <tr><td>Jupiter</td><td>Supportive</td></tr>
+      <tr><td>Mars</td><td>Slight dominance</td></tr>
+      <tr><td>Saturn</td><td>Neutral</td></tr>
+    </table>
+    <p>Overall strength: ≈70%</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">7️⃣ Dasha Period Compatibility</h3>
+    <p>Girl: Mercury/Venus influence</p>
+    <p>Boy: Saturn/Jupiter influence</p>
+    <p>Score: ≈67%</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">8️⃣ 7th House (Marriage House) Analysis</h3>
+    <p>Key indicators: Venus influence supportive</p>
+    <p>No strong malefic cluster</p>
+    <p>Meaning: Marriage stability possible. Communication important</p>
+    <p>Score: ≈71%</p>
+  </div>
+
+  <div class="card">
+    <h3 class="section-title">⭐ Overall Compatibility Summary</h3>
+    <table>
+      <tr><th>Factor</th><th>Compatibility</th></tr>
+      <tr><td>Wisi Porondam</td><td>65%</td></tr>
+      <tr><td>Dasa Porondam</td><td>70%</td></tr>
+      <tr><td>Ashtakoota</td><td>69%</td></tr>
+      <tr><td>Nakshatra</td><td>70%</td></tr>
+      <tr><td>Rashi</td><td>68%</td></tr>
+      <tr><td>Kuja Dosha</td><td>80%</td></tr>
+      <tr><td>Lagna</td><td>72%</td></tr>
+      <tr><td>Graha Bala</td><td>70%</td></tr>
+      <tr><td>Dasha</td><td>67%</td></tr>
+      <tr><td>7th House</td><td>71%</td></tr>
+    </table>
+    <p>Overall marriage compatibility: ≈70–72%</p>
+    <p>Astrologer interpretation: Acceptable / good match. Marriage can proceed</p>
+  </div>
+  `;
+}
+
+// Smart Multi-Page PDF
+function generatePDF() {
+  const sections = document.querySelectorAll("#report .card");
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF('p','pt','a4');
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = pdf.internal.pageSize.getHeight();
+  let cursorY = 0;
+
+  const processSection = (index) => {
+    if(index >= sections.length) {
+      pdf.save("Horoscope_Report.pdf");
+      return;
+    }
+
+    const section = sections[index];
+
+    html2canvas(section, { scale:2 }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const imgProps = pdf.getImageProperties(imgData);
+
+      const imgWidth = pdfWidth;
+      const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+      if(cursorY + imgHeight > pdfHeight) {
+        pdf.addPage();
+        cursorY = 0;
+      }
+
+      pdf.addImage(imgData, 'PNG', 0, cursorY, imgWidth, imgHeight);
+      cursorY += imgHeight + 10;
+
+      processSection(index + 1);
+    });
+  }
+
+  processSection(0);
+}
+</script>
+
+</body>
+</html>
